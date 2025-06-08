@@ -18,6 +18,9 @@ public class AppTest {
         // Exxercicio 03
 //        service.getEntityById(13);
 
+        // Exercicio 04
+//        service.getEntitiesWithParams("teste", 5);
+
 
 
 

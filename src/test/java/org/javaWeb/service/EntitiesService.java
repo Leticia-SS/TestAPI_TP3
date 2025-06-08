@@ -80,4 +80,40 @@ public class EntitiesService {
             e.printStackTrace();
         }
     }
+
+    public void getEntitiesWithParams(String categoria, int limite) {
+        try {
+            String urlString = BASE_URL + "?categoria=" + categoria + "&limite=" + limite;
+            System.out.println("URL Final: " + urlString);
+
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json");
+
+            int statusCode = connection.getResponseCode();
+            System.out.println("Status HTTP: " + statusCode);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            reader.close();
+            connection.disconnect();
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement jsonElement = JsonParser.parseString(response.toString());
+            String prettyJson = gson.toJson(jsonElement);
+
+            System.out.println("Resposta:\n" + prettyJson);
+            System.out.println("--------------------------------------------------");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

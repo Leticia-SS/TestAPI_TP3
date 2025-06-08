@@ -6,6 +6,12 @@ import org.javaWeb.service.EntitiesService;
 public class AppTest {
     public static void main(String[] args) {
         EntitiesService service = new EntitiesService();
-        service.getAllEntities();
+//        service.getAllEntities();
+
+        for (int i=1; i<= 8; i++) {
+            service.getEntityById(i);
+        }
+
     }
+
 }

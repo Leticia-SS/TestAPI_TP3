@@ -26,9 +26,9 @@ public class EntitiesService {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
-            StringBuilder repsonde = new StringBuilder();
+            StringBuilder response = new StringBuilder();
             while ((line= reader.readLine()) != null) {
-                repsonde.append(line).append("\n");
+                response.append(line).append("\n");
             }
 //            System.out.println("Body: " + repsonde.toString());
 
@@ -36,7 +36,7 @@ public class EntitiesService {
             connection.disconnect();
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonElement jsonElement = JsonParser.parseString(repsonde.toString());
+            JsonElement jsonElement = JsonParser.parseString(response.toString());
             String prettyJson = gson.toJson(jsonElement);
             System.out.println(prettyJson);
             System.out.println("--------------------------------------------------");

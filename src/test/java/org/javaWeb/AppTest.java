@@ -21,7 +21,8 @@ public class AppTest {
         // Exercicio 04
 //        service.getEntitiesWithParams("teste", 5);
 
-
+        // Exercicio 05
+//        service.createEntity();
 
 
 

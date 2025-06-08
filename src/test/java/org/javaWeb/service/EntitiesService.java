@@ -1,11 +1,9 @@
 package org.javaWeb.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -110,6 +108,53 @@ public class EntitiesService {
             String prettyJson = gson.toJson(jsonElement);
 
             System.out.println("Resposta:\n" + prettyJson);
+            System.out.println("--------------------------------------------------");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createEntity() {
+        try {
+            URL url = new URL(BASE_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+
+            String jsonInputString = "{\"name\": \"aluno\"}";
+
+            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+            outputStream.writeBytes(jsonInputString);
+            outputStream.flush();
+            outputStream.close();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            reader.close();
+            connection.disconnect();
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement jsonElement = JsonParser.parseString(response.toString());
+            String prettyJson = gson.toJson(jsonElement);
+
+            System.out.println("Resposta:\n" + prettyJson);
+
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            if (jsonObject.has("id")) {
+                int id = jsonObject.get("id").getAsInt();
+                System.out.println("ID gerado: " + id);
+            } else {
+                System.out.println("ID não encontrado na resposta.");
+            }
             System.out.println("--------------------------------------------------");
 
         } catch (Exception e) {

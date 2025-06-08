@@ -1,38 +1,29 @@
 package org.javaWeb;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import io.javalin.Javalin;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+public class AppTest {
+    public static void main(String[] args) {
+        Javalin app = Javalin.create();
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+        app.before(ctx -> {
+           long inicio = System.currentTimeMillis();
+           ctx.attribute("inicio", inicio);
+           ctx.attribute("retorno", "Teste");
+            System.out.println("Antes da Rota: " + ctx.path());
+        });
+        app.after(ctx -> {
+            long inicio = ctx.attribute("inicio");
+            long end = System.currentTimeMillis();
+            long duracao = end - inicio;
+            System.out.println("Após a Rota: " + ctx.path() + " demorou: " + duracao + "ms");
+        });
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+        app.get("/inicio", ctx -> {
+            System.out.println("Metodo Inicio");
+            ctx.result("Inicio");
+        });
+
+        app.start(8082);
     }
 }

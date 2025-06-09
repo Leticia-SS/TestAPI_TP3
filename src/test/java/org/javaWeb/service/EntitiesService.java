@@ -161,4 +161,43 @@ public class EntitiesService {
             e.printStackTrace();
         }
     }
+
+    public void updateEntityById(int id, String newName) {
+        try {
+            URL url = new URL(BASE_URL + "/" + id);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+
+            String jsonInput = "{\"name\": \"" + newName + "\"}";
+
+            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+            outputStream.writeBytes(jsonInput);
+            outputStream.flush();
+            outputStream.close();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            reader.close();
+            connection.disconnect();
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement jsonElement = JsonParser.parseString(response.toString());
+            String prettyJson = gson.toJson(jsonElement);
+
+            System.out.println("Resposta:\n" + prettyJson);
+            System.out.println("--------------------------------------------------");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

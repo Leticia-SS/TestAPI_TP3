@@ -24,8 +24,13 @@ public class AppTest {
         // Exercicio 05
 //        service.createEntity();
 
+        // Exercicio 06
+//        service.getEntityById(11);
 
+        // Exercicio 07
+        service.updateEntityById(10, "novo");
 
+        service.getEntityById(10);
 
 
     }

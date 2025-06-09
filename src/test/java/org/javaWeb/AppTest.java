@@ -28,10 +28,12 @@ public class AppTest {
 //        service.getEntityById(11);
 
         // Exercicio 07
-        service.updateEntityById(10, "novo");
+//        service.updateEntityById(10, "novo");
+//        service.getEntityById(10);
 
+        // Exercicio 08
+        service.updateEntityById(10, "novo nome");
         service.getEntityById(10);
-
 
     }
 

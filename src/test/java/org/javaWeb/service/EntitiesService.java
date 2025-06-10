@@ -273,4 +273,30 @@ public class EntitiesService {
         }
     }
 
+    public void checkAllowedMethods() {
+        try {
+            URL url = new URL(BASE_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("OPTIONS");
+
+            int statusCode = connection.getResponseCode();
+            System.out.println("Status HTTP: " + statusCode);
+
+            String allowHeader = connection.getHeaderField("Allow");
+
+            if (allowHeader != null) {
+                System.out.println("Métodos permitidos: " + allowHeader);
+            } else {
+                System.out.println("Cabeçalho 'Allow' não encontrado.");
+            }
+
+            connection.disconnect();
+            System.out.println("--------------------------------------------------");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

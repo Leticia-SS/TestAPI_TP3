@@ -36,9 +36,14 @@ public class AppTest {
 //        service.getEntityById(10);
 
         // Exercicio 09
-        service.deleteEntityById(9);
-        service.getEntityById(9);
+//        service.deleteEntityById(9);
+//        service.getEntityById(9);
 
+        // Exercicio 10
+//        service.deleteEntityById(13);
+
+        // Exercicio 11
+        service.checkAllowedMethods();
 
     }
 

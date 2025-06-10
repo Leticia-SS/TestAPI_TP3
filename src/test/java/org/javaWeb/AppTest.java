@@ -32,8 +32,13 @@ public class AppTest {
 //        service.getEntityById(10);
 
         // Exercicio 08
-        service.updateEntityById(10, "novo nome");
-        service.getEntityById(10);
+//        service.updateEntityById(10, "novo nome");
+//        service.getEntityById(10);
+
+        // Exercicio 09
+        service.deleteEntityById(9);
+        service.getEntityById(9);
+
 
     }
 

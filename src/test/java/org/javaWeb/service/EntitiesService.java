@@ -243,4 +243,34 @@ public class EntitiesService {
         }
     }
 
+    public void deleteEntityById(int id) {
+        try {
+            String urlString = BASE_URL + "/" + id;
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("DELETE");
+            connection.setRequestProperty("Accept", "application/json");
+
+            int statusCode = connection.getResponseCode();
+            System.out.println("Status HTTP: " + statusCode);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            reader.close();
+            connection.disconnect();
+
+            System.out.println("Resposta:\n" + response);
+            System.out.println("--------------------------------------------------");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
